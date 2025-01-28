@@ -6,8 +6,8 @@ from matplotlib.colors import TwoSlopeNorm
 # Load the data
 gdf = gpd.read_file(r"C:\Users\Chen\Downloads\WA-precincts-with-results.geojson")
 
-# Calculate pct_dem_lead
-gdf['pct_dem_lead'] = (gdf['votes_dem'] - gdf['votes_rep']) / gdf['votes_total']
+# Filter counties by gdf['GEOID']: startswith (King) 53033, (Pierce) 53053, (Snohomish) 53061
+# gdf = gdf[gdf['GEOID'].str.startswith('53033') | gdf['GEOID'].str.startswith('53053') | gdf['GEOID'].str.startswith('53061')]
 
 # Define the bbox for Seattle-Tacoma-Bellevue, WA MSA
 bbox = (-122.8529952, 46.7287986, -120.9067414, 48.2992336)
@@ -17,7 +17,7 @@ gdf = gdf.cx[bbox[0]:bbox[2], bbox[1]:bbox[3]]
 
 # Create a color map
 norm = TwoSlopeNorm(vmin=-1, vcenter=0, vmax=1)
-cmap = plt.get_cmap('coolwarm_r')  # '_r' reverses the color map
+cmap = plt.get_cmap('bwr_r')  # '_r' reverses the color map
 
 # Plot the map
 fig, ax = plt.subplots(1, 1, figsize=(15, 15))
