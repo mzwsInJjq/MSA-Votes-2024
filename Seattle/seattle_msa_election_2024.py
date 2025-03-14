@@ -7,9 +7,9 @@ from matplotlib.colors import TwoSlopeNorm
 gdf = gpd.read_file(r"C:\Users\Chen\Downloads\WA-precincts-with-results.geojson")
 
 # Filter counties by gdf['GEOID']: startswith (King) 53033, (Pierce) 53053, (Snohomish) 53061
-# gdf = gdf[gdf['GEOID'].str.startswith('53033') | gdf['GEOID'].str.startswith('53053') | gdf['GEOID'].str.startswith('53061')]
+gdf = gdf[gdf['GEOID'].str.startswith('53033') | gdf['GEOID'].str.startswith('53053') | gdf['GEOID'].str.startswith('53061')]
 
-# Define the bbox for Seattle-Tacoma-Bellevue, WA MSA
+# Define the bbox for Seattle-Tacoma-Bellevue, WA Metropolitan Statistical Area
 bbox = (-122.8529952, 46.7287986, -120.9067414, 48.2992336)
 
 # Filter the GeoDataFrame to include only precincts within the bbox
@@ -34,3 +34,11 @@ plt.savefig('seattle_msa_election_2024.pdf', format='pdf', bbox_inches='tight')
 
 # Show the plot
 plt.show()
+
+sum_votes_dem = gdf['votes_dem'].sum()
+sum_votes_rep = gdf['votes_rep'].sum()
+sum_votes_third_party = gdf['votes_total'].sum() - sum_votes_dem - sum_votes_rep
+sum_votes_total = gdf['votes_total'].sum()
+print(f"Democratic % for Seattle MSA: {100 * sum_votes_dem/sum_votes_total:.2f}%")
+print(f"Republican % for Seattle MSA: {100 * sum_votes_rep/sum_votes_total:.2f}%")
+print(f"Third Party % for Seattle MSA: {100 * sum_votes_third_party/sum_votes_total:.2f}%")
