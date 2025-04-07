@@ -61,7 +61,7 @@ for line in lines:
     if line[0][-2] == '0':
         line[0] = line[0][:-2] + line[0][-1]
 
-# Remove redundant 1 from precinct names
+# Remove redundant ones from precinct names
 for line in lines:
     if len([l for l in lines if l[0].startswith(line[0].split()[0])]) == 1:
         line[0] = line[0][:-2]
